@@ -51,9 +51,9 @@ public class BoardController {
         List<BoardDTO> boardDTOList = boardService.pagingList(page);
         System.out.println("boardDTOList = " + boardDTOList);
         // 하단에 보여줄 페이지 번호 목록 데이터
-//        PageDTO pageDTO = boardService.pagingParam(page);
+        PageDTO pageDTO = boardService.pagingParam(page);
         model.addAttribute("boardList", boardDTOList);
-//        model.addAttribute("paging", pageDTO);
+        model.addAttribute("paging", pageDTO);
         return "boardPages/boardPaging";
 
     }
