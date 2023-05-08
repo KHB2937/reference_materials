@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -55,12 +56,21 @@ public class BoardController {
         model.addAttribute("boardList", boardDTOList);
         model.addAttribute("paging", pageDTO);
         return "boardPages/boardPaging";
+    }
 
+    @GetMapping("/search")
+    public String search(@RequestParam("q") String q, @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                         Model model) {
+        List<BoardDTO> boardDTOList = boardService.searchList(q, page);
+        PageDTO pageDTO = boardService.pagingSearchParam(page, q);
+        model.addAttribute("boardList", boardDTOList);
+        model.addAttribute("paging", pageDTO);
+        return "boardPages/boardPaging";
     }
 
     // /board?id=1
     @GetMapping
-    public String findById(@RequestParam("id") Long id, Model model) {
+    public String findById(@RequestParam("id") Long id, Model model, HttpSession session) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);

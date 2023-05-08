@@ -63,6 +63,7 @@
     <button onclick="board_list()">목록</button>
     <button onclick="board_update()">수정</button>
     <button onclick="board_delete()">삭제</button>
+    </c:if>
 
     <div id="comment-write-area">
         <input type="text" id="comment-writer" placeholder="댓글 작성자">
