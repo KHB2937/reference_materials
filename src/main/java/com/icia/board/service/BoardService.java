@@ -121,22 +121,26 @@ public class BoardService {
         return pageDTO;
     }
 
-    public List<BoardDTO> searchList(String q, int page) {
+    public List<BoardDTO> searchList(int page, String type, String q) {
         int pageLimit = 3; // 한페이지에 보여줄 글 갯수
         int pagingStart = (page-1) * pageLimit;
         Map<String, Object> pagingParams = new HashMap<>();
         pagingParams.put("start", pagingStart);
         pagingParams.put("limit", pageLimit);
         pagingParams.put("q", q);
+        pagingParams.put("type", type);
         List<BoardDTO> boardDTOList = boardRepository.searchList(pagingParams);
         return boardDTOList;
     }
 
-    public PageDTO pagingSearchParam(int page, String q) {
+    public PageDTO pagingSearchParam(int page, String type, String q) {
         int pageLimit = 3; // 한페이지에 보여줄 글 갯수
         int blockLimit = 3; // 하단에 보여줄 페이지 번호 갯수
+        Map<String, Object> pagingParams = new HashMap<>();
+        pagingParams.put("q", q);
+        pagingParams.put("type", type);
         // 전체 글 갯수 조회
-        int boardCount = boardRepository.boardSearchCount(q);
+        int boardCount = boardRepository.boardSearchCount(pagingParams);
         // 전체 페이지 갯수 계산
         int maxPage = (int) (Math.ceil((double)boardCount / pageLimit));
         // 시작 페이지 값 계산(1, 4, 7, 10 ~~)

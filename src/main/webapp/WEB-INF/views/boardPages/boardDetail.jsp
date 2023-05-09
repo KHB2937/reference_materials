@@ -63,7 +63,6 @@
     <button onclick="board_list()">목록</button>
     <button onclick="board_update()">수정</button>
     <button onclick="board_delete()">삭제</button>
-    </c:if>
 
     <div id="comment-write-area">
         <input type="text" id="comment-writer" placeholder="댓글 작성자">
@@ -143,7 +142,10 @@
         });
     }
     const board_list = () => {
-        location.href = "/board/";
+        const type = '${type}';
+        const q = '${q}';
+        const page = '${page}';
+        location.href = "/board/paging?page=" + page + "&type=" + type + "&q=" + q;
     }
     const board_update = () => {
         const id = '${board.id}';
